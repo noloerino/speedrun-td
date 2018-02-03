@@ -9,7 +9,7 @@ const camera = new THREE.PerspectiveCamera(
 )
 new OrbitControls(camera)
 
-const renderer = new THREE.WebGLRenderer()
+const renderer = new THREE.WebGLRenderer({alpha: true})
 const canvas = document.getElementById('canvas')
 var [ width, height ] = [ canvas.offsetWidth, canvas.offsetHeight ]
 renderer.setSize(width, height)
