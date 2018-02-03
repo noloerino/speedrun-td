@@ -17,7 +17,7 @@ class Game {
         Object.entries(this.bases).forEach(
             ([team, base]) => {
                 var team = base.team;
-                var pos = base.pos;
+                var pos = base.pos.copy();
                 var dude = new Dude(pos, team);
                 this.dudes.push(dude);
                 newEntities.push(dude);
@@ -28,8 +28,9 @@ class Game {
         for (let dude of this.dudes) {
             var team = dude.team;
             var pos = dude.pos;
-            for (let base of this.bases) {
-                if (base.team !== team && base.contains(dude.pos)) {
+            for (let t in this.bases) {
+                var base = this.bases[t];
+                if (t != team && base.contains(dude.pos)) {
                     dude.hitBase(base, removing);
                     break;
                 }
@@ -47,11 +48,11 @@ class Game {
         } else {
             this.spawnTimer--;
         }
-        this.dudes.map(d => d.update());
+        this.dudes.forEach(d => d.update());
         for (let e of newEntities) {
             // dudes are already pushed
         }
-        this.dudes = this.dudes.filter(dude => removingEntities.includes(dude));
+        this.dudes = this.dudes.filter(dude => !removingEntities.includes(dude));
         return { removed: removingEntities, added: newEntities };
     }
 

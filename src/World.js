@@ -14,6 +14,10 @@ class Vector2D {
     sub(o) {
         return new Vector2D(this.x - o.x, this.y - o.y);
     }
+
+    copy() {
+        return new Vector2D(this.x, this.y);
+    }
 }
 
 const FR_BASE_NAME = "base";
@@ -39,7 +43,7 @@ class Tile {
     contains(pos) {
         var xdiff = pos.x - this.pos.x;
         var ydiff = pos.y - this.pos.y;
-        return 0 < xdiff && xdiff < 1 && 0 < ydiff && ydiff < 1;
+        return Math.sqrt(xdiff * xdiff + ydiff * ydiff) < 1;
     }
 
     getSpawnDir() {
@@ -172,7 +176,7 @@ class Tower {
     }
 
     fire(target, newBullets, newEntities) {
-        var b = new Bullet(this.team, 0.3, this.pos, );
+        var b = new Bullet(this.team, 0.05, this.pos, );
         newBullets.push(b);
         newEntities.push(b)
     }
