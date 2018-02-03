@@ -191,7 +191,8 @@ class World {
         var material = new THREE.MeshBasicMaterial({color: 0xff0000});
         this.getTiles().map(tile => {
             var cube = new THREE.Mesh(geometry, material);
-            cube.position.set(tile.getPos().x, tile.getPos().y, 0);
+            console.log(tile)
+            cube.position.set(tile.getPos().x, 0, tile.getPos().y);
             group.add(cube);
         })
         return group;
