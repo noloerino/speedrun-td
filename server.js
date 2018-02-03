@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
 })
 app.get('/client.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'bin', 'client.js')
+    res.sendFile(path.join(__dirname, 'bin', 'client.js'))
 })
 
 server.listen(8080, () => {
