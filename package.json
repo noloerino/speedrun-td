@@ -4,6 +4,8 @@
   "description": "A tower defense game, probably.",
   "main": "Game.js",
   "scripts": {
+    "build": "webpack",
+    "build:watch": "npm run build -- -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +18,8 @@
     "url": "https://github.com/noloerino/speedrun-td/issues"
   },
   "homepage": "https://github.com/noloerino/speedrun-td#readme",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.2",
+    "webpack": "^3.10.0"
+  }
 }
