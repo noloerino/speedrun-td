@@ -8,11 +8,8 @@ class Game {
         this.players = [];
         this.world = new World();
         this.spawnTimer = BASE_SPAWN_DELAY;
-        this.dudes = {};
+        this.dudes = [];
         this.bases = this.world.getBases();
-        for (let team in this.bases) {
-            this.dudes[team] = [];
-        }
     }
 
     spawnDudes() {
@@ -20,19 +17,25 @@ class Game {
             ([team, base]) => {
                 var team = base.team;
                 var pos = base.pos;
-                var dude = new Dude();
-                this.dudes[team].push(dude);
+                var dude = new Dude(pos, team);
+                this.dudes.push(dude);
             });
     }
 
+    checkDudeCollisions(removing) {
+
+    }
+
     update() {
+        var removingDudes = [];
+        this.checkDudeCollisions(removingDudes);
         if (this.spawnTimer == 0) {
             this.spawnDudes();
             this.spawnTimer = BASE_SPAWN_DELAY;
         } else {
             this.spawnTimer--;
         }
-        Object.entries(this.dudes).forEach(([k, v]) => v.map(d => d.update()));
+        this.dudes.forEach(d => d.update());
     }
 
 }

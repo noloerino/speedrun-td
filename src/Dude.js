@@ -7,6 +7,10 @@ const TEAM_COLORS = {
     1: 0x41c4f4,
     2: 0xf44341,
 };
+const TEAM_DIRS = {
+    1: RIGHT,
+    2: LEFT,
+};
 class Dude {
 
     /**
@@ -18,7 +22,7 @@ class Dude {
         this.pos = pos;
         this.team = team;
         this.speed = 0.3;
-        this.dir = dir;
+        this.dir = dir ? dir : TEAM_DIRS[team];
         this.color = TEAM_COLORS[team];
     }
 
