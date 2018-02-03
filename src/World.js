@@ -155,6 +155,10 @@ class Dude {
         this.speed = 0.3;
     }
 
+    update() {
+        
+    }
+
     hitBase(base, removing) {
         removing.push(this);
     }
