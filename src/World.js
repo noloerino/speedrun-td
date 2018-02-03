@@ -111,6 +111,20 @@ class Grid2D {
         }
     }
 
+    getWidth() {
+        var wide = 0;
+        for (let row of this.grid) {
+            if (row.length > wide) {
+                wide = row.length;
+            }
+        }
+        return wide;
+    }
+
+    getLength() {
+        return this.grid.length;
+    }
+
     getTiles() {
         return [].concat.apply([], this.grid);
     }
@@ -196,11 +210,11 @@ class Bullet {
     }
 }
 
-const TEST_MAP = ["-----o----ooo",
-"ooo--o----ooo",
-"1ppppppppppp2",
-"ooo--o----ooo",
-"ooo--o-------"];
+const TEST_MAP = ["------o----ooo",
+"ooo---o----ooo",
+"1pppppppppppp2",
+"ooo---o----ooo",
+"ooo---o-------"];
 
 class World {
 

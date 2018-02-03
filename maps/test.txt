@@ -1,5 +1,5 @@
------o----ooo
-ooo--o----ooo
-1ppppppppppp2
-ooo--o----ooo
-ooo--o-------
+------o----ooo
+ooo---o----ooo
+1pppppppppppp2
+ooo---o----ooo
+ooo---o-------
