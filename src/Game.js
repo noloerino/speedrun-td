@@ -7,10 +7,6 @@ class Game {
 		this.world = new World();
 	}
 
-	getFramesToNextSpawn() {
-
-	}
-
 	update() {
 		
 	}

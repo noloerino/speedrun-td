@@ -13,10 +13,19 @@ class Tile {
         this.passable = passable;
         this.placeable = placeable;
         this.team = -1; // signifies neutrality
+        this.spawnTimer = -1; // only active if it's a base
     }
 
     isBase() {
         return this.name === FR_BASE_NAME;
+    }
+
+    update() {
+        if (this.isBase()) {
+            if (this.spawnTimer) {
+                
+            }
+        }
     }
 
     static fromChar(c) {
@@ -26,6 +35,7 @@ class Tile {
     static makeBase(team) {
         var tile = new Tile(FR_BASE_NAME, teamColors[team], false, false);
         tile.team = team;
+        tile.spawnTimer = 20;
         return tile;
     }
 }
@@ -62,9 +72,9 @@ class Grid2D {
         // index of team and basecoords should match
         this.baseCoordss = [];
         this.teams = [];
-        for (line of lines) {
+        for (let line of lines) {
             var newArr = [];
-            for (c of line) {
+            for (let c of line) {
                 if (isNaN(c)) { // checks if is number
                     newArr.add(Tile.fromChar(c));
                 } else {
