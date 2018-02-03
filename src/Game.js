@@ -5,6 +5,10 @@ class Game {
 		this.map = new Map();
 	}
 
+	getFramesToNextSpawn() {
+		
+	}
+
 	update() {
 		
 	}
