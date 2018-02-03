@@ -119,7 +119,7 @@ class Dude {
      */
     constructor(speed, absolutePos, team) {
         this.speed = speed;
-        this.absolutePos = 
+        this.absolutePos = 0;
     }
 }
 
@@ -165,5 +165,5 @@ class Map {
 }
 
 module.exports = {
-    Map: 
+    Map: Map,
 }
