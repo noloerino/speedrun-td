@@ -25,7 +25,7 @@ class Tile {
     }
 
     getPos() {
-        return pos;
+        return this.pos;
     }
 
     isBase() {
@@ -107,7 +107,7 @@ class Grid2D {
     }
 
     getTiles() {
-        return [].concat(this.grid);
+        return [].concat.apply([], this.grid);
     }
 
     getTileAt(pos) {
@@ -181,24 +181,24 @@ const TEST_MAP = ["-----o----ooo",
 class World {
 
     constructor() {
-        this.tiles = new Grid2D(TEST_MAP);
+        this.grid = new Grid2D(TEST_MAP);
         this.dudes = [];
     }
 
     initializeRendering() {
         var group = new THREE.Group();
         var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshBasicMaterial({color: 0xff0000})
-        this.tiles.getTiles().map(tile => {
+        var material = new THREE.MeshBasicMaterial({color: 0xff0000});
+        this.getTiles().map(tile => {
             var cube = new THREE.Mesh(geometry, material);
-            cube.position.set(tile.getPos().x, tile.getPos().y, 0)
+            cube.position.set(tile.getPos().x, tile.getPos().y, 0);
             group.add(cube);
         })
         return group;
     }
 
     getTiles() {
-        return this.tiles;
+        return this.grid.getTiles();
     }
 
     getDudes() {
