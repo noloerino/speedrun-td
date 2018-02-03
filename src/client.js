@@ -7,7 +7,6 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 )
-new OrbitControls(camera)
 
 const renderer = new THREE.WebGLRenderer({alpha: true})
 const canvas = document.getElementById('canvas')
@@ -15,20 +14,24 @@ var [ width, height ] = [ canvas.offsetWidth, canvas.offsetHeight ]
 renderer.setSize(width, height)
 document.getElementById('canvas').appendChild(renderer.domElement)
 
-var geometry = new THREE.BoxGeometry(1, 1, 1)
-var material = new THREE.MeshBasicMaterial({color: 0x00ff00})
-var cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
-
 const Game = require('./Game')
 var game = new Game()
 scene.add(game.world.initializeRendering())
-
 camera.position.z = 10
+camera.position.y = 10
+var controls = new OrbitControls(camera)
+controls.target.set(game.world.grid.getWidth() / 2, 0, game.world.grid.getLength() / 2)
+camera.lookAt(game.world.grid.getWidth() / 2, 0, game.world.grid.getLength() / 2)
+
+var light = new THREE.AmbientLight(0xaaaaaa)
+scene.add(light)
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add(directionalLight);
+
 
 function animate() {
     game.update()
-    cube.rotation.y += 0.1
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
 }
