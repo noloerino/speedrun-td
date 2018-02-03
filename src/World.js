@@ -32,6 +32,12 @@ class Tile {
         return this.pos;
     }
 
+    contains(pos) {
+        var xdiff = pos.x - this.pos.x;
+        var ydiff = pos.y - this.pos.y;
+        return 0 < xdiff && xdiff < 1 && 0 < ydiff && ydiff < 1;
+    }
+
     getSpawnDir() {
         if (this.isBase()) {
             return Tile.teamDirs[this.team];
@@ -55,6 +61,7 @@ class Tile {
     static makeBase(team) {
         var tile = new Tile(FR_BASE_NAME, Tile.teamColors[team], false, false);
         tile.team = team;
+        tile.hp = 100;
         return tile;
     }
 }

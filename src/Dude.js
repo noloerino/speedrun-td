@@ -45,6 +45,7 @@ class Dude {
     }
 
     hitBase(base, removing) {
+        base.hp -= DUDE_DMG_TO_BASE;
         removing.push(this);
     }
 }
