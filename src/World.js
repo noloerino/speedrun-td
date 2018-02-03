@@ -50,7 +50,7 @@ class Tile {
     }
 
     static fromChar(c) {
-        return Tile.tiles[c];
+        return Tile.tiles[c]();
     }
 
     static makeBase(team) {
@@ -62,9 +62,9 @@ class Tile {
 }
 
 Tile.tiles = {
-    'o': new Tile("normal_tile", 0x42f44b, true, true),
-    '-': new Tile("empty_tile", 0xffffff, false, false),
-    'p': new Tile("pathway", 0xd9f441, true, false),
+    'o': () => new Tile("normal_tile", 0x42f44b, true, true),
+    '-': () => new Tile("empty_tile", 0xffffff, false, false),
+    'p': () => new Tile("pathway", 0xd9f441, true, false),
 };
 Tile.teamColors = {
     1: 0x41c4f4,
