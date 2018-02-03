@@ -1,5 +1,6 @@
 const World = require('./World.js');
 const Dude = require('./Dude.js');
+const Vector2D = require('./Vector2D.js');
 
 const BASE_SPAWN_DELAY = 120;
 class Game {
@@ -10,7 +11,14 @@ class Game {
         this.spawnTimer = BASE_SPAWN_DELAY;
         this.dudes = [];
         this.bullets = [];
+        this.towers = [];
+        this.bullets = [];
         this.bases = this.world.getBases();
+    }
+
+    spawnTowers() {
+        this.towers.push(new Tower(4, 10, new Vector2D(8, 0), 1));
+        this.towers.push(new Tower(4, 10, new Vector2D(8, 5), 2));
     }
 
     spawnDudes(newEntities) {
@@ -48,11 +56,11 @@ class Game {
         } else {
             this.spawnTimer--;
         }
+        this.towers.forEach(t => t.update(this.bullets, newEntities));
         this.dudes.forEach(d => d.update());
-        for (let e of newEntities) {
-            // dudes are already pushed
-        }
-        this.dudes = this.dudes.filter(dude => !removingEntities.includes(dude));
+        var rmfilter = e => !removingEntities.includes(e);
+        this.towers = this.towers.filter(rmfilter);
+        this.dudes = this.dudes.filter(rmfilter);
         return { removed: removingEntities, added: newEntities };
     }
 
