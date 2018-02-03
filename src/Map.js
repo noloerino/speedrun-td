@@ -129,10 +129,16 @@ class Bullet {
     }
 }
 
+const TEST_MAP = ["-----o----ooo",
+"ooo--o----ooo",
+"1ppppppppppp2",
+"ooo--o----ooo",
+"ooo--o-------";
+
 class Map {
 
-    constructor(lines) {
-        this.tiles = new Grid2D(lines);
+    constructor() {
+        this.tiles = new Grid2D(TEST_MAP);
     }
 
     getTiles() {
