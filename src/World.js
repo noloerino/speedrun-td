@@ -212,10 +212,12 @@ class World {
     initializeRendering() {
         var group = new THREE.Group();
         this.getTiles().map(tile => {
-            var material = new THREE.MeshBasicMaterial({color: tile.color});
-            var geometry = new THREE.BoxGeometry(1, 1, 1);
+            if (tile.isEmpty()) {
+                return;
+            }
+            var material = new THREE.MeshStandardMaterial({color: tile.color});
+            var geometry = new THREE.BoxGeometry(1, 0.4, 1);
             var cube = new THREE.Mesh(geometry, material);
-            console.log(tile)
             cube.position.set(tile.getPos().x, 0, tile.getPos().y);
             group.add(cube);
         })

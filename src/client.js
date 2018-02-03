@@ -15,20 +15,20 @@ var [ width, height ] = [ canvas.offsetWidth, canvas.offsetHeight ]
 renderer.setSize(width, height)
 document.getElementById('canvas').appendChild(renderer.domElement)
 
-var geometry = new THREE.BoxGeometry(1, 1, 1)
-var material = new THREE.MeshBasicMaterial({color: 0x00ff00})
-var cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
-
 const Game = require('./Game')
 var game = new Game()
 scene.add(game.world.initializeRendering())
+
+var light = new THREE.AmbientLight(0xaaaaaa)
+scene.add(light)
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add(directionalLight);
 
 camera.position.z = 10
 
 function animate() {
     game.update()
-    cube.rotation.y += 0.1
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
 }
