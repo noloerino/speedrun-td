@@ -1,4 +1,5 @@
 const World = require('./World.js');
+const Tower = require('./Tower');
 const Dude = require('./Dude.js');
 const Vector2D = require('./Vector2D.js');
 
