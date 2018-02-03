@@ -9,6 +9,7 @@ class Vector2D {
 
 const BASE_SPAWN_DELAY = 20;
 const FR_BASE_NAME = "base";
+const EMPTY_NAME = "empty_tile";
 class Tile {
 
     constructor(name, color, passable, placeable) {
@@ -30,6 +31,10 @@ class Tile {
 
     isBase() {
         return this.name === FR_BASE_NAME;
+    }
+
+    isEmpty() {
+        return this.name === EMPTY_NAME;
     }
 
     spawnDude() {
@@ -63,7 +68,7 @@ class Tile {
 
 Tile.tiles = {
     'o': () => new Tile("normal_tile", 0x42f44b, true, true),
-    '-': () => new Tile("empty_tile", 0x000000, false, false),
+    '-': () => new Tile(EMPTY_NAME, 0x000000, false, false),
     'p': () => new Tile("pathway", 0xd9f441, true, false),
 };
 Tile.teamColors = {
