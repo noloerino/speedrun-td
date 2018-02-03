@@ -206,10 +206,10 @@ class World {
 
     initializeRendering() {
         var group = new THREE.Group();
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
         this.getTiles().map(tile => {
-            var cube = new THREE.Mesh(geometry, material);
             var material = new THREE.MeshBasicMaterial({color: tile.color});
+            var geometry = new THREE.BoxGeometry(1, 1, 1);
+            var cube = new THREE.Mesh(geometry, material);
             console.log(tile)
             cube.position.set(tile.getPos().x, 0, tile.getPos().y);
             group.add(cube);
