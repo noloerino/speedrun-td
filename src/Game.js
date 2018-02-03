@@ -12,13 +12,14 @@ class Game {
         this.bases = this.world.getBases();
     }
 
-    spawnDudes(adding) {
+    spawnDudes(newEntities) {
         Object.entries(this.bases).forEach(
             ([team, base]) => {
                 var team = base.team;
                 var pos = base.pos;
                 var dude = new Dude(pos, team);
-                adding.push(dude);
+                this.dudes.push(dude);
+                newEntities.push(dude);
             });
     }
 
@@ -45,12 +46,9 @@ class Game {
         } else {
             this.spawnTimer--;
         }
-        this.dudes.forEach(d => d.update());
-
+        this.dudes.map(d => d.update());
         for (let e of newEntities) {
-            if (e instanceof Dude) {
-                this.dudes.push(e);
-            }
+            // dudes are already pushed
         }
         this.dudes = this.dudes.filter(dude => removingEntities.includes(dude));
         return { removed: removingEntities, added: newEntities };

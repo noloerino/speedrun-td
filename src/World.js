@@ -10,6 +10,10 @@ class Vector2D {
         this.x = x;
         this.y = y;
     }
+
+    sub(o) {
+        return new Vector2D(this.x - o.x, this.y - o.y);
+    }
 }
 
 const FR_BASE_NAME = "base";
@@ -161,23 +165,29 @@ class Tower {
      */
     constructor(atkRadius, cooldown, pos, team) {
         this.atkRadius = atkRadius;
+        this.cdCap = cooldown;
         this.cooldown = cooldown;
         this.pos = pos;
         this.team = team;
     }
+
+    fire(target, newBullets, newEntities) {
+        var b = new Bullet(0.1, this.pos, );
+        newEntities.push(b)
+    }
 }
 
 class Bullet {
-    constructor(speed, pos) {
+    constructor(speed, pos, dirVector) {
         
     }
 }
 
-const TEST_MAP = ["------o----ooo",
-"ooo---o----ooo",
-"1pppppppppppp2",
-"ooo---o----ooo",
-"ooo---o-------"];
+const TEST_MAP = ["-------o----ooo",
+"ooo----o----ooo",
+"1ppppppppppppp2",
+"ooo----o----ooo",
+"ooo----o-------"];
 
 class World {
 
