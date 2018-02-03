@@ -11,6 +11,6 @@ app.get('/client.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'bin', 'client.js'))
 })
 
-server.listen(8080, () => {
-    console.log('server started on *:8080')
+server.listen(8000, () => {
+    console.log('server started on *:8000')
 })

@@ -5,6 +5,7 @@ class Vector2D {
     }
 }
 
+const BASE_SPAWN_DELAY = 20;
 class Tile {
 
     constructor(name, color, passable, placeable) {
@@ -17,13 +18,16 @@ class Tile {
     }
 
     isBase() {
-        return this.name === FR_BASE_NAME;
+        return this.name === Tile.FR_BASE_NAME;
     }
 
     update() {
         if (this.isBase()) {
-            if (this.spawnTimer) {
-                
+            if (this.spawnTimer <= 0) {
+                spawnDude();
+                this.spawnTimer = BASE_SPAWN_DELAY;
+            } else {
+                this.spawnTimer -= 1;
             }
         }
     }
@@ -33,19 +37,15 @@ class Tile {
     }
 
     static makeBase(team) {
-        var tile = new Tile(FR_BASE_NAME, teamColors[team], false, false);
+        var tile = new Tile(Tile.FR_BASE_NAME, Tile.teamColors[team], false, false);
         tile.team = team;
-        tile.spawnTimer = 20;
+        tile.spawnTimer = BASE_SPAWN_DELAY;
         return tile;
     }
 }
 
 Object.defineProperty(Tile, "FR_BASE_NAME", {
     value: "base",
-    writable: false,
-});
-Object.defineProperty(Tile, "ENEMY_SPAWN_NAME", {
-    value: "enemy_spawn",
     writable: false,
 });
 
@@ -70,22 +70,22 @@ class Grid2D {
         // initialize a 2d array of tiles
         this.grid = [];
         // index of team and basecoords should match
-        this.baseCoordss = [];
+        this.bases = [];
         this.teams = [];
         for (let line of lines) {
             var newArr = [];
             for (let c of line) {
                 if (isNaN(c)) { // checks if is number
-                    newArr.add(Tile.fromChar(c));
+                    newArr.push(Tile.fromChar(c));
                 } else {
                     var team = parseInt(c);
-                    var base = Tile.base(team);
-                    teams.add(team);
-                    bases.add(base);
-                    newArr.add(base);
+                    var base = Tile.makeBase(team);
+                    this.teams.push(team);
+                    this.bases.push(base);
+                    newArr.push(base);
                 }
             }
-            grid.add(newArr);
+            this.grid.push(newArr);
         }
     }
 
