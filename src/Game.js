@@ -1,7 +1,7 @@
 const World = require('./World.js');
 const Dude = require('./Dude.js');
 
-const BASE_SPAWN_DELAY = 20;
+const BASE_SPAWN_DELAY = 120;
 class Game {
     
     constructor() {
