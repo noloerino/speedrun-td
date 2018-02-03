@@ -1,24 +1,10 @@
 const THREE = require('three');
+const Vector2D = require('./Vector2D.js');
 
 const UP = "up";
 const DOWN = "down";
 const LEFT = "left";
 const RIGHT = "right";
-
-class Vector2D {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    sub(o) {
-        return new Vector2D(this.x - o.x, this.y - o.y);
-    }
-
-    copy() {
-        return new Vector2D(this.x, this.y);
-    }
-}
 
 const FR_BASE_NAME = "base";
 const EMPTY_NAME = "empty_tile";
@@ -173,18 +159,37 @@ class Tower {
         this.cooldown = cooldown;
         this.pos = pos;
         this.team = team;
+        this.color = Tiles.teamColors[team];
     }
 
-    fire(target, newBullets, newEntities) {
-        var b = new Bullet(this.team, 0.05, this.pos, );
-        newBullets.push(b);
+    update(bullets, newEntities) {
+        if (this.cooldown == 0) {
+            fire(new Vector2D(0, 0), bullets, newEntities);
+            this.cooldown = this.cdCap;
+        }
+        this.cooldown--;
+    }
+
+    fire(target, bullets, newEntities) {
+        var b = new Bullet(this.team, 0.05, this.pos, target.pos.sub(this.pos));
+        bullets.push(b);
         newEntities.push(b)
     }
 }
 
 class Bullet {
     constructor(team, speed, pos, dirVector) {
-        
+        this.team = team;
+        this.speed = speed;
+        this.pos = pos;
+        this.dirVector = dirVector;
+        this.color = Tiles.teamColors[team];
+    }
+
+    update() {
+        var angle = this.dirVector.direction();
+        this.pos.x += this.speed * Math.cos(angle);
+        this.pos.y += this.speed * Math.sin(angle);
     }
 }
 
