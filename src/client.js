@@ -1,4 +1,5 @@
 const THREE = require('three')
+const OrbitControls = require('three-orbit-controls')(THREE)
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(
     75,
@@ -6,6 +7,7 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 )
+new OrbitControls(camera)
 
 const renderer = new THREE.WebGLRenderer()
 const canvas = document.getElementById('canvas')
@@ -22,7 +24,7 @@ const Game = require('./Game')
 var game = new Game()
 scene.add(game.world.initializeRendering())
 
-camera.position.z = 5
+camera.position.z = 10
 
 function animate() {
     game.update()
