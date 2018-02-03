@@ -34,7 +34,7 @@ class Tile {
 
     spawnDude() {
         if (this.isBase()) {
-            return new Dude()
+            console.log("I should spawn a dude somehow");
         }
     }
 
@@ -62,13 +62,13 @@ class Tile {
 }
 
 Tile.tiles = {
-    'o': new Tile("normal_tile", "green", true, true),
-    '-': new Tile("empty_tile", "black", false, false),
-    'p': new Tile("pathway", "yellow", true, false),
+    'o': new Tile("normal_tile", 0x42f44b, true, true),
+    '-': new Tile("empty_tile", 0xffffff, false, false),
+    'p': new Tile("pathway", 0xd9f441, true, false),
 };
 Tile.teamColors = {
-    1: "blue",
-    2: "red",
+    1: 0x41c4f4,
+    2: 0xf44341,
 };
 
 class Grid2D {
@@ -144,6 +144,10 @@ class Tower {
 }
 
 const DUDE_DMG_TO_BASE = 5;
+const UP = "up";
+const DOWN = "down";
+const LEFT = "left";
+const RIGHT = "right";
 class Dude {
 
     /**
@@ -151,14 +155,29 @@ class Dude {
      * (should be fine-tuned)
      * `pos` is transient, and is the location of the dude relative to the coordinate grid.
      */
-    constructor(pos, team) {
+    constructor(pos, team, dir) {
         this.pos = pos;
         this.team = team;
         this.speed = 0.3;
+        this.dir = dir;
     }
 
     update() {
-        
+        switch (dir) {
+            case UP:
+                this.pos.y -= this.speed;
+                break;
+            case DOWN:
+                this.pos.y += this.speed;
+                break;
+            case LEFT:
+                this.pos.x -= this.speed;
+                break;
+            case RIGHT:
+                this.pos.x += this.speed;
+                break;
+        }
+        // TODO figure out pathing
     }
 
     hitBase(base, removing) {
