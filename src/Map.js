@@ -133,9 +133,9 @@ const TEST_MAP = ["-----o----ooo",
 "ooo--o----ooo",
 "1ppppppppppp2",
 "ooo--o----ooo",
-"ooo--o-------";
+"ooo--o-------"];
 
-class Map {
+class World {
 
     constructor() {
         this.tiles = new Grid2D(TEST_MAP);
@@ -171,5 +171,5 @@ class Map {
 }
 
 module.exports = {
-    Map: Map,
+    World: World,
 }
