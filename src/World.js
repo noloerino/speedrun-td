@@ -1,5 +1,10 @@
 const THREE = require('three');
 
+const UP = "up";
+const DOWN = "down";
+const LEFT = "left";
+const RIGHT = "right";
+
 class Vector2D {
     constructor(x, y) {
         this.x = x;
@@ -7,7 +12,6 @@ class Vector2D {
     }
 }
 
-const BASE_SPAWN_DELAY = 20;
 const FR_BASE_NAME = "base";
 const EMPTY_NAME = "empty_tile";
 class Tile {
@@ -18,7 +22,6 @@ class Tile {
         this.passable = passable;
         this.placeable = placeable;
         this.team = -1; // signifies neutrality
-        this.spawnTimer = -1; // only active if it's a base
     }
 
     setPos(pos) {
@@ -29,29 +32,20 @@ class Tile {
         return this.pos;
     }
 
+    getSpawnDir() {
+        if (this.isBase()) {
+            return Tile.teamDirs[this.team];
+        } else {
+            throw new Error("Cannot get spawn direction of non-base tile");
+        }
+    }
+
     isBase() {
         return this.name === FR_BASE_NAME;
     }
 
     isEmpty() {
         return this.name === EMPTY_NAME;
-    }
-
-    spawnDude() {
-        if (this.isBase()) {
-            console.log("I should spawn a dude somehow");
-        }
-    }
-
-    update() {
-        if (this.isBase()) {
-            if (this.spawnTimer <= 0) {
-                spawnDude();
-                this.spawnTimer = BASE_SPAWN_DELAY;
-            } else {
-                this.spawnTimer--;
-            }
-        }
     }
 
     static fromChar(c) {
@@ -61,7 +55,6 @@ class Tile {
     static makeBase(team) {
         var tile = new Tile(FR_BASE_NAME, Tile.teamColors[team], false, false);
         tile.team = team;
-        tile.spawnTimer = BASE_SPAWN_DELAY;
         return tile;
     }
 }
@@ -75,6 +68,10 @@ Tile.teamColors = {
     1: 0x41c4f4,
     2: 0xf44341,
 };
+Tile.teamDirs = {
+    1: RIGHT,
+    2: LEFT,
+}
 
 class Grid2D {
 
@@ -155,52 +152,11 @@ class Tower {
     /**
      * The attack radius is given in terms of the number of grid tiles
      */
-    constructor(atkRadius, cooldown, pos) {
+    constructor(atkRadius, cooldown, pos, team) {
         this.atkRadius = atkRadius;
         this.cooldown = cooldown;
         this.pos = pos;
-    }
-}
-
-const DUDE_DMG_TO_BASE = 5;
-const UP = "up";
-const DOWN = "down";
-const LEFT = "left";
-const RIGHT = "right";
-class Dude {
-
-    /**
-     * `speed` is a final property, given in terms of distance moved per update cycle
-     * (should be fine-tuned)
-     * `pos` is transient, and is the location of the dude relative to the coordinate grid.
-     */
-    constructor(pos, team, dir) {
-        this.pos = pos;
         this.team = team;
-        this.speed = 0.3;
-        this.dir = dir;
-    }
-
-    update() {
-        switch (dir) {
-            case UP:
-                this.pos.y -= this.speed;
-                break;
-            case DOWN:
-                this.pos.y += this.speed;
-                break;
-            case LEFT:
-                this.pos.x -= this.speed;
-                break;
-            case RIGHT:
-                this.pos.x += this.speed;
-                break;
-        }
-        // TODO figure out pathing
-    }
-
-    hitBase(base, removing) {
-        removing.push(this);
     }
 }
 
@@ -220,7 +176,6 @@ class World {
 
     constructor() {
         this.grid = new Grid2D(TEST_MAP);
-        this.dudes = [];
     }
 
     initializeRendering() {
@@ -240,32 +195,8 @@ class World {
         return this.grid.getTiles();
     }
 
-    getDudes() {
-        return this.dudes;
-    }
-
-    addDude(v) {
-
-    }
-
-    getTowers() {
-
-    }
-
-    addTower(v) {
-
-    }
-
-    getBullets() {
-
-    }
-
-    spawnEnemy() {
-
-    }
-
-    removeTower(id) {
-
+    getBases() {
+        return this.grid.bases;
     }
 }
 
