@@ -18,7 +18,6 @@ class Game {
                 var team = base.team;
                 var pos = base.pos;
                 var dude = new Dude(pos, team);
-                this.dudes.push(dude);
                 adding.push(dude);
             });
     }
@@ -41,12 +40,19 @@ class Game {
         var newEntities = [];
         this.checkDudeCollisions(removingEntities);
         if (this.spawnTimer === 0) {
-            this.spawnDudes(newEntities);
+            this.spawnDudes(newDudes);
             this.spawnTimer = BASE_SPAWN_DELAY;
         } else {
             this.spawnTimer--;
         }
         this.dudes.forEach(d => d.update());
+
+        for (let e of newEntites) {
+            if (e instanceof Dude) {
+                this.dudes.push(e);
+            }
+        }
+        this.dudes = this.dudes.filter(dude => removingEntities.includes(dude));
         return { removed: removingEntities, added: newEntites };
     }
 
