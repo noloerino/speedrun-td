@@ -65,11 +65,18 @@ class Game {
         } else {
             this.spawnTimer--;
         }
+        this.bullets.forEach(b => b.update());
+        this.bullets.forEach(b => {
+            if (!this.world.grid.isTileInBounds(b.pos)) {
+                removingEntities.push(b);
+            }
+        });
         this.towers.forEach(t => t.update(this.bullets, newEntities));
         this.dudes.forEach(d => d.update());
         var rmfilter = e => !removingEntities.includes(e);
         this.towers = this.towers.filter(rmfilter);
         this.dudes = this.dudes.filter(rmfilter);
+        this.bullets = this.bullets.filter(rmfilter);
         return { removed: removingEntities, added: newEntities };
     }
 

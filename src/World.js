@@ -63,11 +63,7 @@ class Grid2D {
     }
 
     isTileInBounds(pos) {
-        if (pos.y >= this.grid.length) {
-            return false;
-        }
-        var row = this.grid[pos.y];
-        return pos.x < row.length;
+        return 0 < pos.x && pos.x < this.getWidth() && 0 < pos.y && pos.y < this.getLength();
     }
 
     isTilePassable(pos) {

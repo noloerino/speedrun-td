@@ -42,7 +42,7 @@ class Tower {
         this.atkRadius = atkRadius;
         this.cdCap = cooldown;
         this.cooldown = cooldown;
-        this.pos = pos;
+        this.pos = pos.copy();
         this.team = team;
         this.color = Tile.teamColors[team];
     }
@@ -56,7 +56,7 @@ class Tower {
     }
 
     fire(target, bullets, newEntities) {
-        var b = new Bullet(this.team, 0.05, this.pos, target.sub(this.pos));
+        var b = new Bullet(this.team, 0.05, this.pos.copy(), target.sub(this.pos));
         bullets.push(b);
         newEntities.push(b)
     }
