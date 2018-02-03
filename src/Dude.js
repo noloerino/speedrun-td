@@ -60,7 +60,7 @@ class Dude {
     }
 
     initializeRendering() {
-        var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        var geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
         var material = new THREE.MeshBasicMaterial({color: this.color});
         this.rendering = new THREE.Mesh(geometry, material);
         this.updateRendering();
