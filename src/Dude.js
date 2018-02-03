@@ -53,6 +53,9 @@ class Dude {
     }
 
     updateRendering() {
+        if (!this.rendering) {
+            return;
+        }
         this.rendering.position.set(this.pos.x, 0.4, this.pos.y);
     }
 
