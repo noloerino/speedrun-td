@@ -2,12 +2,21 @@ const THREE = require('three');
 const Vector2D = require('./Vector2D');
 const Tile = require('./Tile');
 
+// just for fun
+var currentDirVector = new Vector2D(0, 1);
+var updateDirVector = function() {
+    var angle = Math.atan2(currentDirVector.y, currentDirVector.x);
+    currentDirVector.x = Math.cos(angle + Math.PI/20);
+    currentDirVector.y = Math.sin(angle + Math.PI/20);
+    return currentDirVector.copy();
+};
 class Bullet {
     constructor(team, speed, pos, dirVector) {
         this.team = team;
         this.speed = speed;
         this.pos = pos;
-        this.dirVector = dirVector;
+        //this.dirVector = dirVector;
+        this.dirVector = updateDirVector();
         this.color = Tile.teamColors[team];
     }
 

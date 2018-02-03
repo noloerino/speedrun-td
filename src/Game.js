@@ -20,8 +20,8 @@ class Game {
     }
 
     spawnTowers(newEntities) {
-        this.towers.push(new Tower(4, 10, new Vector2D(8, 0), 1));
-        this.towers.push(new Tower(4, 10, new Vector2D(8, 5), 2));
+        this.towers.push(new Tower(4, 10, new Vector2D(7, 0), 1));
+        this.towers.push(new Tower(4, 10, new Vector2D(7, 4), 2));
         newEntities.push(this.towers[0]);
         newEntities.push(this.towers[1]);
     }
