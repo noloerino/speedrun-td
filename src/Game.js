@@ -40,7 +40,7 @@ class Game {
         var newEntities = [];
         this.checkDudeCollisions(removingEntities);
         if (this.spawnTimer === 0) {
-            this.spawnDudes(newDudes);
+            this.spawnDudes(newEntities);
             this.spawnTimer = BASE_SPAWN_DELAY;
         } else {
             this.spawnTimer--;
