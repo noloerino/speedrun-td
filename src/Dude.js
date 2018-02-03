@@ -23,7 +23,7 @@ class Dude {
     constructor(pos, team, dir) {
         this.pos = pos;
         this.team = team;
-        this.speed = 0.03;
+        this.speed = 0.1;
         this.dir = dir ? dir : TEAM_DIRS[team];
         this.color = TEAM_COLORS[team];
     }

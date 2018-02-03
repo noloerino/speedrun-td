@@ -9,6 +9,7 @@ class Game {
         this.world = new World();
         this.spawnTimer = BASE_SPAWN_DELAY;
         this.dudes = [];
+        this.bullets = [];
         this.bases = this.world.getBases();
     }
 

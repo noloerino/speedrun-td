@@ -172,13 +172,14 @@ class Tower {
     }
 
     fire(target, newBullets, newEntities) {
-        var b = new Bullet(0.1, this.pos, );
+        var b = new Bullet(this.team, 0.3, this.pos, );
+        newBullets.push(b);
         newEntities.push(b)
     }
 }
 
 class Bullet {
-    constructor(speed, pos, dirVector) {
+    constructor(team, speed, pos, dirVector) {
         
     }
 }
