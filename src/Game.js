@@ -36,7 +36,7 @@ class Game {
     }
 
     update() {
-        var removingEntites = [];
+        var removingEntities = [];
         var newEntities = [];
         this.checkDudeCollisions(removingEntities);
         if (this.spawnTimer === 0) {
@@ -47,13 +47,13 @@ class Game {
         }
         this.dudes.forEach(d => d.update());
 
-        for (let e of newEntites) {
+        for (let e of newEntities) {
             if (e instanceof Dude) {
                 this.dudes.push(e);
             }
         }
         this.dudes = this.dudes.filter(dude => removingEntities.includes(dude));
-        return { removed: removingEntities, added: newEntites };
+        return { removed: removingEntities, added: newEntities };
     }
 
 }
