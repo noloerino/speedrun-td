@@ -18,7 +18,7 @@ class Dude {
     }
 
     update() {
-        switch (dir) {
+        switch (this.dir) {
             case UP:
                 this.pos.y -= this.speed;
                 break;
