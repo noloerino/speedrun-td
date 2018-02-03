@@ -62,7 +62,9 @@ class Tower {
     }
 
     updateRendering() {
-        this.rendering.position.set(this.pos.x, 0.4, this.pos.y);
+        if (this.rendering) {
+            this.rendering.position.set(this.pos.x, 0.4, this.pos.y);
+        }
     }
 
     initializeRendering() {
