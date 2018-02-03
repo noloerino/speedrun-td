@@ -63,7 +63,7 @@ class Tile {
 
 Tile.tiles = {
     'o': () => new Tile("normal_tile", 0x42f44b, true, true),
-    '-': () => new Tile("empty_tile", 0xffffff, false, false),
+    '-': () => new Tile("empty_tile", 0x000000, false, false),
     'p': () => new Tile("pathway", 0xd9f441, true, false),
 };
 Tile.teamColors = {
