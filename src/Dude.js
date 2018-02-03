@@ -3,6 +3,10 @@ const UP = "up";
 const DOWN = "down";
 const LEFT = "left";
 const RIGHT = "right";
+const TEAM_COLORS = {
+    1: 0x41c4f4,
+    2: 0xf44341,
+};
 class Dude {
 
     /**
@@ -15,6 +19,7 @@ class Dude {
         this.team = team;
         this.speed = 0.3;
         this.dir = dir;
+        this.color = TEAM_COLORS[team];
     }
 
     update() {
