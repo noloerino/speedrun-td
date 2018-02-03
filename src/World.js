@@ -8,6 +8,7 @@ class Vector2D {
 }
 
 const BASE_SPAWN_DELAY = 20;
+const FR_BASE_NAME = "base";
 class Tile {
 
     constructor(name, color, passable, placeable) {
@@ -19,8 +20,22 @@ class Tile {
         this.spawnTimer = -1; // only active if it's a base
     }
 
+    setPos(pos) {
+        this.pos = pos;
+    }
+
+    getPos() {
+        return pos;
+    }
+
     isBase() {
-        return this.name === Tile.FR_BASE_NAME;
+        return this.name === FR_BASE_NAME;
+    }
+
+    spawnDude() {
+        if (this.isBase()) {
+            return new Dude()
+        }
     }
 
     update() {
@@ -29,7 +44,7 @@ class Tile {
                 spawnDude();
                 this.spawnTimer = BASE_SPAWN_DELAY;
             } else {
-                this.spawnTimer -= 1;
+                this.spawnTimer--;
             }
         }
     }
@@ -39,17 +54,12 @@ class Tile {
     }
 
     static makeBase(team) {
-        var tile = new Tile(Tile.FR_BASE_NAME, Tile.teamColors[team], false, false);
+        var tile = new Tile(FR_BASE_NAME, Tile.teamColors[team], false, false);
         tile.team = team;
         tile.spawnTimer = BASE_SPAWN_DELAY;
         return tile;
     }
 }
-
-Object.defineProperty(Tile, "FR_BASE_NAME", {
-    value: "base",
-    writable: false,
-});
 
 Tile.tiles = {
     'o': new Tile("normal_tile", "green", true, true),
@@ -71,24 +81,33 @@ class Grid2D {
     constructor(lines) {
         // initialize a 2d array of tiles
         this.grid = [];
-        // index of team and basecoords should match
-        this.bases = [];
-        this.teams = [];
+        // map of team id to base object
+        this.bases = {};
+        var y = 0;
         for (let line of lines) {
             var newArr = [];
+            var x = 0;
             for (let c of line) {
                 if (isNaN(c)) { // checks if is number
-                    newArr.push(Tile.fromChar(c));
+                    var tile = Tile.fromChar(c);
+                    tile.setPos(new Vector2D(x, y));
+                    newArr.push(tile);
                 } else {
                     var team = parseInt(c);
                     var base = Tile.makeBase(team);
-                    this.teams.push(team);
-                    this.bases.push(base);
+                    base.setPos(new Vector2D(x ,y));
+                    this.bases[team] = base;
                     newArr.push(base);
                 }
+                x++;
             }
             this.grid.push(newArr);
+            y++;
         }
+    }
+
+    getTiles() {
+        return [].concat(this.grid);
     }
 
     getTileAt(pos) {
@@ -124,6 +143,7 @@ class Tower {
     }
 }
 
+const DUDE_DMG_TO_BASE = 5;
 class Dude {
 
     /**
@@ -131,9 +151,14 @@ class Dude {
      * (should be fine-tuned)
      * `pos` is transient, and is the location of the dude relative to the coordinate grid.
      */
-    constructor(speed, pos, team) {
-        this.speed = speed;
+    constructor(pos, team) {
         this.pos = pos;
+        this.team = team;
+        this.speed = 0.3;
+    }
+
+    hitBase(base, removing) {
+        removing.push(this);
     }
 }
 
