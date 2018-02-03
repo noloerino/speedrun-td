@@ -1,12 +1,14 @@
+const World = require('./World.js');
+
 class Game {
 	
 	constructor() {
 		this.players = [];
-		this.map = new Map();
+		this.world = new World();
 	}
 
 	getFramesToNextSpawn() {
-		
+
 	}
 
 	update() {
