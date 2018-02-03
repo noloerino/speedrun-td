@@ -1,3 +1,5 @@
+const THREE = require('three');
+
 const DUDE_DMG_TO_BASE = 5;
 const UP = "up";
 const DOWN = "down";
@@ -42,11 +44,24 @@ class Dude {
                 break;
         }
         // TODO figure out pathing
+        this.updateRendering();
     }
 
     hitBase(base, removing) {
         base.hp -= DUDE_DMG_TO_BASE;
         removing.push(this);
+    }
+
+    updateRendering() {
+        this.rendering.position.set(this.pos.x, 0.4, this.pos.y);
+    }
+
+    initializeRendering() {
+        var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        var material = new THREE.MeshBasicMaterial({color: this.color});
+        this.rendering = new THREE.Mesh(geometry, material);
+        this.updateRendering();
+        return this.rendering;
     }
 }
 

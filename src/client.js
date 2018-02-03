@@ -17,21 +17,37 @@ document.getElementById('canvas').appendChild(renderer.domElement)
 const Game = require('./Game')
 var game = new Game()
 scene.add(game.world.initializeRendering())
-camera.position.z = 10
-camera.position.y = 10
+camera.position.z = 8 
+camera.position.y = 8
 var controls = new OrbitControls(camera)
 controls.target.set(game.world.grid.getWidth() / 2, 0, game.world.grid.getLength() / 2)
 camera.lookAt(game.world.grid.getWidth() / 2, 0, game.world.grid.getLength() / 2)
 
-var light = new THREE.AmbientLight(0xaaaaaa)
+var spotLight = new THREE.SpotLight( 0xffffff );
+spotLight.position.set( 0, 10, 0 );
+
+spotLight.castShadow = true;
+
+spotLight.shadow.mapSize.width = 3;
+spotLight.shadow.mapSize.height = 3;
+
+spotLight.shadow.camera.near = 500;
+spotLight.shadow.camera.far = 4000;
+spotLight.shadow.camera.fov = 30;
+
+scene.add( spotLight );
+
+var light = new THREE.AmbientLight(0xffffff)
 scene.add(light)
 
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-scene.add(directionalLight);
+// scene.add(directionalLight);
 
 
 function animate() {
-    game.update()
+    var {added, removed} = game.update()
+    added.map(added => scene.add(added.initializeRendering()))
+    removed.map(removed => scene.remove(removed.rendering))
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
 }
