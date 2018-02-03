@@ -15,11 +15,15 @@ class Game {
         this.towers = [];
         this.bullets = [];
         this.bases = this.world.getBases();
+
+        this.towersSpawned = false;
     }
 
-    spawnTowers() {
+    spawnTowers(newEntities) {
         this.towers.push(new Tower(4, 10, new Vector2D(8, 0), 1));
         this.towers.push(new Tower(4, 10, new Vector2D(8, 5), 2));
+        newEntities.push(towers[0]);
+        newEntities.push(towers[1]);
     }
 
     spawnDudes(newEntities) {
@@ -51,6 +55,10 @@ class Game {
         var removingEntities = [];
         var newEntities = [];
         this.checkDudeCollisions(removingEntities);
+        if (!this.towersSpawned) {
+            this.spawnTowers(newEntities);
+            this.towersSpawned = true;
+        }
         if (this.spawnTimer === 0) {
             this.spawnDudes(newEntities);
             this.spawnTimer = BASE_SPAWN_DELAY;
