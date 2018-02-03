@@ -105,8 +105,10 @@ class Tower {
     /**
      * The attack radius is given in terms of the number of grid tiles
      */
-    constructor(atkRadius) {
+    constructor(atkRadius, cooldown, pos) {
         this.atkRadius = atkRadius;
+        this.cooldown = cooldown;
+        this.pos = pos;
     }
 }
 
@@ -115,11 +117,11 @@ class Dude {
     /**
      * `speed` is a final property, given in terms of distance moved per update cycle
      * (should be fine-tuned)
-     * `absolutePos` is transient, and is the location of the dude relative to the coordinate grid.
+     * `pos` is transient, and is the location of the dude relative to the coordinate grid.
      */
-    constructor(speed, absolutePos, team) {
+    constructor(speed, pos, team) {
         this.speed = speed;
-        this.absolutePos = 0;
+        this.pos = pos;
     }
 }
 
@@ -139,6 +141,7 @@ class World {
 
     constructor() {
         this.tiles = new Grid2D(TEST_MAP);
+        this.dudes = [];
     }
 
     getTiles() {
@@ -146,6 +149,10 @@ class World {
     }
 
     getDudes() {
+        return this.dudes;
+    }
+
+    addDude(v) {
 
     }
 
@@ -153,11 +160,11 @@ class World {
 
     }
 
-    getBullets() {
+    addTower(v) {
 
     }
 
-    createTower(v) {
+    getBullets() {
 
     }
 
@@ -172,4 +179,4 @@ class World {
 
 module.exports = {
     World: World,
-}
+};
