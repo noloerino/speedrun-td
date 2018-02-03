@@ -43,9 +43,13 @@ scene.add(light)
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 // scene.add(directionalLight);
 
-
+var x = true;
 function animate() {
     var {added, removed} = game.update()
+    if (x) {
+    console.log(added)
+        x = false;
+    }
     added.map(added => scene.add(added.initializeRendering()))
     removed.map(removed => scene.remove(removed.rendering))
     requestAnimationFrame(animate)
