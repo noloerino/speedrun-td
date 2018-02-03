@@ -131,6 +131,14 @@ class Bullet {
 
 class Map {
 
+    constructor(lines) {
+        this.tiles = new Grid2D(lines);
+    }
+
+    getTiles() {
+        return this.tiles;
+    }
+
     getDudes() {
 
     }
@@ -154,4 +162,8 @@ class Map {
     removeTower(id) {
 
     }
+}
+
+module.exports = {
+    Map: 
 }
